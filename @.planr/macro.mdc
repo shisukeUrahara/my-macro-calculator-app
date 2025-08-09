@@ -1,0 +1,74 @@
+# Macro Calculator Plan
+
+This plan outlines the steps to build a macro calculator on the application's front page.
+
+## Phase 1: UI Components
+
+1.  **Create Macro Calculator Component**:
+    -   Create a new file at `src/components/macro-calculator.tsx`.
+    -   This component will encapsulate all the logic and UI for the calculator.
+
+2.  **Build the Input Form**:
+    -   **Unit System Toggle**: Implement a switch to toggle between Metric (kg, cm) and Imperial (lbs, inches) units.
+    -   **Input Fields**:
+        -   `Age`: Number input.
+        -   `Gender`: Radio group for "Male" and "Female".
+        -   `Weight`: Number input. Label should dynamically change based on the selected unit system.
+        -   `Height`: Number input(s). For imperial, this might be two inputs (feet and inches). Label should dynamically change.
+        -   `Activity Level`: A dropdown/select with options:
+            -   Sedentary (little or no exercise)
+            -   Lightly Active (light exercise/sports 1-3 days/week)
+            -   Moderately Active (moderate exercise/sports 3-5 days/week)
+            -   Very Active (hard exercise/sports 6-7 days a week)
+            -   Super Active (very hard exercise/physical job)
+    -   **Submit Button**: A button to trigger the calculation.
+
+3.  **Create the Results Display**:
+    -   **Install Charting Library**: Add `recharts` to the project for displaying the pie chart.
+    -   **Pie Chart**:
+        -   Display the macro breakdown (Protein, Carbs, Fats) as a percentage of total calories.
+        -   Make it visually appealing.
+    -   **Detailed Breakdown**:
+        -   Display Total Daily Calories.
+        -   Display grams of Protein, Carbohydrates, and Fats.
+        -   Display calorie count for each macronutrient.
+
+## Phase 2: Calculation Logic (within `macro-calculator.tsx`)
+
+1.  **State Management**:
+    -   Use `useState` hooks to manage all form inputs, the selected unit system, and the calculated results.
+
+2.  **Unit Conversion**:
+    -   Create functions to convert weight and height from Imperial to Metric if the user selects Imperial units, as the formulas are simpler with metric units.
+    -   Weight: `kg = lbs / 2.20462`
+    -   Height: `cm = inches * 2.54`
+
+3.  **BMR Calculation (Mifflin-St Jeor Formula)**:
+    -   `BMR = (10 * weight in kg) + (6.25 * height in cm) - (5 * age) + s`
+    -   `s` is a gender-specific variable: `+5` for males, `-161` for females.
+
+4.  **TDEE Calculation**:
+    -   Multiply BMR by an activity factor:
+        -   Sedentary: 1.2
+        -   Lightly Active: 1.375
+        -   Moderately Active: 1.55
+        -   Very Active: 1.725
+        -   Super Active: 1.9
+
+5.  **Calorie Adjustment for Muscle Gain**:
+    -   `Target Calories = TDEE + 500` (This provides a healthy surplus for muscle growth).
+
+6.  **Macronutrient Calculation**:
+    -   **Protein**: `(2.2g * weight in kg)`. Protein calories = grams * 4.
+    -   **Fats**: `(Target Calories * 0.25) / 9`. Fats should be 25% of total calories.
+    -   **Carbohydrates**: `(Target Calories - Protein Calories - Fat Calories) / 4`. Carbs make up the remainder.
+
+## Phase 3: Integration and Styling
+
+1.  **Add Component to Homepage**:
+    -   Import and render the `<MacroCalculator />` component in `src/routes/(marketing)/index.tsx`.
+    -   The calculator should be the main feature on this page.
+
+2.  **Styling**:
+    -   Leverage existing `shadcn/ui` components (`Button`, `Card`, `Input`, `Select`, `RadioGroup`, `Switch`) for a consistent UI.
+    -   Add custom CSS in `src/styles/custom.css` for any specific styling needed for the calculator form or the "fancy" pie chart presentation.

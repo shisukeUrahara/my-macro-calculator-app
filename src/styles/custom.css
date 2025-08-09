@@ -1,0 +1,21 @@
+.fancy-pie-chart .recharts-legend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.fancy-pie-chart .recharts-surface {
+  filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.1));
+}
+
+.macro-results-card {
+  background: linear-gradient(135deg, hsl(var(--card)), hsl(var(--card) / 0.8));
+  border-width: 1px;
+  border-color: hsl(var(--border) / 0.5);
+  transition: all 0.3s ease-in-out;
+}
+
+.macro-results-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
