@@ -1,0 +1,14 @@
+{
+  "agentCanUpdateSnapshot": true,
+  "install": "pnpm install",
+  "terminals": [
+    {
+      "name": "Dev Server",
+      "command": "pnpm dev"
+    },
+    {
+      "name": "Build",
+      "command": "pnpm build"
+    }
+  ]
+}
